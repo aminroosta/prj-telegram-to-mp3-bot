@@ -19,6 +19,7 @@
   "author": "amin roosta",
   "license": "MIT",
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.0",
     "node-localstorage": "^1.3.0",
     "node-telegram-bot-api": "^0.21.1"
   }
