@@ -46,18 +46,18 @@ function run_bot() {
       return;
     }
     var video = msg.video || msg.document;
-    bot.sendMessage(chatId, 'Downloading from telegram: ' + video.file_name + ' ...');
+    bot.sendMessage(chatId, 'Downloading from telegram: ' + (video.file_name || video.file_id) + ' ...');
     bot.downloadFile(video.file_id, 'downloads')
       .then(function(filePath) {
-        bot.sendMessage(chatId, 'Converting '+ video.file_name + ' ...');
-        var mp3FileName = video.file_name.substr(0, video.file_name.lastIndexOf(".")) + '_' + chatId + '_.mp3';
+        bot.sendMessage(chatId, 'Converting '+ (video.file_name || video.file_id) + ' ...');
+        var mp3FileName = (video.file_name ? video.file_name.substr(0, video.file_name.lastIndexOf(".")) : video.file_id) + '_' + chatId + '_.mp3';
         var mp3FilePath = 'downloads/' + mp3FileName;
         new ffmpeg(filePath)
             .audioBitrate(320)
             .saveToFile(mp3FilePath)
             .on('error', function(err) {
               console.warn(err);
-              bot.sendMessage(chatId, 'Conversion failed for '+ video.file_name);
+              bot.sendMessage(chatId, 'Conversion failed for '+ (video.file_name || video.file_id));
               fs.unlink(filePath);
             })
             .on('end', function() {
@@ -66,12 +66,16 @@ function run_bot() {
                 .then(function() {
                   fs.unlink(mp3FilePath);
                 })
+                .catch(function() {
+                  fs.unlink(mp3FilePath);
+                  bot.sendMessage(chatId, 'Fail to upload '+ mp3FileName);
+                });
               fs.unlink(filePath);
             });
       })
       .catch(function(e) {
         console.warn(e);
-        bot.sendMessage(chatId, 'Failed to download'+ video.file_name);
+        bot.sendMessage(chatId, 'Failed to download '+ (video.file_name || video.file_id));
       });
   });
 }
