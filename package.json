@@ -1,0 +1,25 @@
+{
+  "name": "topmp3bot",
+  "version": "0.0.0",
+  "description": "telgram bot that converst videos to mp3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/aminroosta/tomp3bot"
+  },
+  "keywords": [
+    "tomp3",
+    "telegram",
+    "bot"
+  ],
+  "author": "amin roosta",
+  "license": "MIT",
+  "dependencies": {
+    "node-localstorage": "^1.3.0",
+    "node-telegram-bot-api": "^0.21.1"
+  }
+}
