@@ -1,6 +1,6 @@
 Telegram bot to search for lyrics.  
 
-Chat with `@amin_lyrics_bot` to find out how it works.
+Chat with `@to_mp3_bot` to find out how it works.
 
 Make sure to add `token.json` file if you are going to fork this repo.
 The content should look like this:
